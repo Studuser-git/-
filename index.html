@@ -1,0 +1,817 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>PRD «Ласточка»</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Unbounded:wght@500;600;700&family=Nunito:wght@400;600;700;800&family=Caveat:wght@600;700&display=swap">
+<style>
+:root{
+  color-scheme: light;
+  --bg:#FCFAFE; --bg-alt:#F5F0FC; --surface:#FFFFFF;
+  --ink:#2B2340; --ink-soft:#615878; --line:#E6DDF5;
+  --lav:#ECE4FB; --lav-mid:#D8C9F6; --lav-ink:#5A43A0;
+  --peach:#FFE6D8; --peach-mid:#FFC9AD; --peach-ink:#A04F2A;
+  --rose:#FBE0EC; --rose-mid:#F3C2D8; --rose-ink:#94386A;
+  --ok:#2E7D5B; --ok-bg:#DDF3E8;
+  --shadow:0 1px 2px rgba(43,35,64,.06),0 8px 24px -12px rgba(43,35,64,.18);
+  --f-display:"Unbounded","Trebuchet MS",system-ui,sans-serif;
+  --f-body:"Nunito","Segoe UI",system-ui,-apple-system,sans-serif;
+  --f-hand:"Caveat","Segoe Print","Comic Sans MS",cursive;
+  --f-mono:ui-monospace,"Cascadia Mono",Consolas,monospace;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    color-scheme: dark;
+    --bg:#1A1624; --bg-alt:#211B2E; --surface:#282137;
+    --ink:#F3EEFB; --ink-soft:#BCB1D1; --line:#3A3150;
+    --lav:#2F2748; --lav-mid:#4B3D75; --lav-ink:#CDBBFA;
+    --peach:#3A2A2A; --peach-mid:#F2B596; --peach-ink:#FFC2A3;
+    --rose:#3A2436; --rose-mid:#6A3F5E; --rose-ink:#F5B5D3;
+    --ok:#8FDDB6; --ok-bg:#1F3A30;
+    --shadow:0 1px 2px rgba(0,0,0,.3),0 10px 28px -12px rgba(0,0,0,.6);
+  }
+}
+:root[data-theme="dark"]{
+  color-scheme: dark;
+  --bg:#1A1624; --bg-alt:#211B2E; --surface:#282137;
+  --ink:#F3EEFB; --ink-soft:#BCB1D1; --line:#3A3150;
+  --lav:#2F2748; --lav-mid:#4B3D75; --lav-ink:#CDBBFA;
+  --peach:#3A2A2A; --peach-mid:#F2B596; --peach-ink:#FFC2A3;
+  --rose:#3A2436; --rose-mid:#6A3F5E; --rose-ink:#F5B5D3;
+  --ok:#8FDDB6; --ok-bg:#1F3A30;
+  --shadow:0 1px 2px rgba(0,0,0,.3),0 10px 28px -12px rgba(0,0,0,.6);
+}
+
+*{box-sizing:border-box}
+html{scroll-behavior:smooth;scroll-padding-top:24px}
+@media (prefers-reduced-motion: reduce){html{scroll-behavior:auto}*{animation:none!important;transition:none!important}}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--f-body);font-size:16px;line-height:1.6;-webkit-font-smoothing:antialiased}
+a{color:var(--lav-ink)}
+:focus-visible{outline:3px solid var(--lav-ink);outline-offset:2px;border-radius:6px}
+code{font-family:var(--f-mono);font-size:.86em;background:var(--lav);color:var(--lav-ink);padding:.1em .4em;border-radius:6px;word-break:break-word}
+
+.wrap{max-width:1180px;margin:0 auto;padding-inline:16px;display:grid;grid-template-columns:220px minmax(0,1fr);gap:48px}
+@media (max-width:960px){.wrap{grid-template-columns:minmax(0,1fr);gap:0}}
+
+/* TOC */
+.toc{position:sticky;top:calc(env(safe-area-inset-top,0px) + 24px);align-self:start;padding-block:32px;max-height:100vh;overflow:auto}
+.toc .logo{display:flex;align-items:center;gap:10px;font-family:var(--f-display);font-weight:600;font-size:15px;margin-bottom:24px;color:var(--ink);text-decoration:none}
+.toc ol{list-style:none;margin:0;padding:0;display:grid;gap:2px;counter-reset:t}
+.toc a.i{display:flex;gap:10px;padding:6px 10px;border-radius:999px;color:var(--ink-soft);text-decoration:none;font-weight:600;font-size:14px}
+.toc a.i span{font-variant-numeric:tabular-nums;color:var(--lav-ink);min-width:18px;font-weight:800}
+.toc a.i:hover{background:var(--lav);color:var(--ink)}
+@media (max-width:960px){.toc{display:none}}
+
+main{padding-block:32px 96px;min-width:0}
+
+/* Hero */
+.hero{display:grid;grid-template-columns:minmax(0,1.35fr) minmax(0,1fr);gap:32px;align-items:center;padding-bottom:40px;border-bottom:1px dashed var(--lav-mid)}
+@media (max-width:760px){.hero{grid-template-columns:1fr}}
+.eyebrow{font-size:12px;font-weight:800;letter-spacing:.12em;text-transform:uppercase;color:var(--peach-ink)}
+h1{font-family:var(--f-display);font-weight:700;font-size:clamp(28px,4.6vw,48px);line-height:1.08;margin:.3em 0 .4em;text-wrap:balance;letter-spacing:-.01em}
+h1 mark{background:var(--peach-mid);color:#2B2340;padding:0 .18em;border-radius:.3em}
+.lede{font-size:18px;color:var(--ink-soft);max-width:60ch;margin:0}
+.meta{display:flex;flex-wrap:wrap;gap:8px;margin-top:20px}
+.chip{display:inline-flex;align-items:center;gap:6px;font-size:13px;font-weight:700;padding:5px 12px;border-radius:999px;background:var(--lav);color:var(--lav-ink)}
+.chip.peach{background:var(--peach);color:var(--peach-ink)}
+.chip.rose{background:var(--rose);color:var(--rose-ink)}
+.chip.ok{background:var(--ok-bg);color:var(--ok)}
+.hero-art{background:var(--lav);border-radius:28px;padding:12px;position:relative}
+.hero-art svg{display:block;width:100%;height:auto}
+.hand{font-family:var(--f-hand);font-weight:700}
+
+/* Sections */
+section{padding-top:64px}
+.sh{display:flex;align-items:baseline;gap:14px;margin-bottom:20px}
+.sh .n{font-family:var(--f-display);font-weight:600;font-size:14px;color:var(--lav-ink);background:var(--lav);border-radius:999px;min-width:38px;height:38px;display:inline-grid;place-items:center;flex:none;font-variant-numeric:tabular-nums;transform:translateY(-4px)}
+h2{font-family:var(--f-display);font-weight:600;font-size:clamp(22px,2.8vw,30px);line-height:1.2;margin:0;text-wrap:balance}
+h3{font-family:var(--f-display);font-weight:600;font-size:17px;line-height:1.3;margin:0 0 8px}
+p{margin:0 0 12px;max-width:68ch}
+.muted{color:var(--ink-soft)}
+.small{font-size:14px}
+
+.grid{display:grid;gap:16px}
+.g2{grid-template-columns:repeat(2,minmax(0,1fr))}
+.g3{grid-template-columns:repeat(3,minmax(0,1fr))}
+.g4{grid-template-columns:repeat(4,minmax(0,1fr))}
+@media (max-width:900px){.g3,.g4{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media (max-width:600px){.g2,.g3,.g4{grid-template-columns:1fr}}
+
+.card{background:var(--surface);border:1px solid var(--line);border-radius:20px;padding:20px;box-shadow:var(--shadow);min-width:0}
+.panel{background:var(--bg-alt);border-radius:24px;padding:24px}
+@media (max-width:600px){.panel{padding:16px}}
+
+/* Tables */
+.tbl{overflow-x:auto;border:1px solid var(--line);border-radius:18px;background:var(--surface)}
+table{border-collapse:collapse;width:100%;font-size:15px}
+th,td{text-align:left;padding:12px 16px;vertical-align:top;border-bottom:1px solid var(--line)}
+th{font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:var(--ink-soft);font-weight:800;background:var(--bg-alt)}
+tr:last-child td{border-bottom:0}
+td:first-child{font-weight:700}
+
+/* Funnel */
+.funnel{display:grid;grid-template-columns:repeat(3,minmax(0,1fr)) auto minmax(0,1.1fr);gap:12px;align-items:stretch}
+.q{background:var(--surface);border:1px dashed var(--lav-mid);border-radius:18px;padding:14px 16px;font-weight:700}
+.q small{display:block;font-weight:600;color:var(--ink-soft);font-size:13px}
+.arrow{display:grid;place-items:center;color:var(--lav-ink);font-size:26px;font-weight:800}
+.goal{display:grid;gap:8px}
+.goal .p{background:var(--peach-mid);color:#2B2340;border-radius:18px;padding:14px 16px;font-weight:800}
+.goal .s{background:var(--lav-mid);color:#2B2340;border-radius:18px;padding:10px 16px;font-weight:700;font-size:14px}
+.goal small{display:block;font-weight:600;font-size:12px;opacity:.75;text-transform:uppercase;letter-spacing:.06em}
+@media (max-width:760px){.funnel{grid-template-columns:1fr}.arrow{transform:rotate(90deg)}}
+
+/* Goals */
+.goals{counter-reset:g;display:grid;gap:12px;grid-template-columns:repeat(2,minmax(0,1fr))}
+@media (max-width:600px){.goals{grid-template-columns:1fr}}
+.goals li{list-style:none;display:flex;gap:12px;align-items:flex-start;background:var(--surface);border:1px solid var(--line);border-radius:16px;padding:14px 16px}
+.goals li::before{counter-increment:g;content:counter(g);font-family:var(--f-display);font-weight:700;color:var(--peach-ink);font-size:20px;line-height:1.2;min-width:18px}
+ul.goals{padding:0;margin:0}
+
+/* Scope */
+.scope h3{display:flex;align-items:center;gap:8px}
+.scope ul{list-style:none;padding:0;margin:0;display:grid;gap:8px}
+.scope li{display:flex;gap:10px;align-items:flex-start}
+.scope .yes li::before{content:"✓";color:var(--ok);font-weight:800}
+.scope .no li{color:var(--ink-soft)}
+.scope .no li::before{content:"—";color:var(--rose-ink);font-weight:800}
+
+/* Page structure wireframe */
+.struct{display:grid;grid-template-columns:minmax(0,300px) minmax(0,1fr);gap:28px;align-items:start}
+@media (max-width:760px){.struct{grid-template-columns:1fr}}
+.phone{border:2px solid var(--lav-mid);border-radius:34px;padding:14px 10px;background:var(--surface);display:grid;gap:6px;position:relative;max-width:300px;width:100%;margin-inline:auto}
+.phone .blk{border-radius:12px;padding:8px 10px;font-size:13px;font-weight:700;display:flex;justify-content:space-between;gap:8px;background:var(--bg-alt);cursor:default;transition:transform .15s}
+.phone .blk code{background:transparent;padding:0;font-size:11px}
+.phone .blk.hl{outline:2px solid var(--lav-ink)}
+.phone .b-head{background:var(--lav)}
+.phone .b-hero{background:var(--peach);min-height:70px;align-items:flex-start}
+.phone .b-groups{min-height:56px}
+.phone .b-sched{min-height:64px}
+.phone .b-foot{background:var(--lav);font-size:12px}
+.phone .fabs{position:absolute;right:-12px;bottom:70px;display:grid;gap:6px}
+.phone .fabs i{width:26px;height:26px;border-radius:50%;display:block;box-shadow:var(--shadow)}
+.slist{display:grid;gap:8px;margin:0;padding:0;list-style:none}
+.slist li{display:grid;grid-template-columns:28px minmax(0,1fr);gap:10px;padding:10px 12px;border-radius:14px;border:1px solid transparent}
+.slist li:hover,.slist li.hl{background:var(--surface);border-color:var(--line)}
+.slist .k{font-family:var(--f-display);font-weight:600;color:var(--lav-ink);font-variant-numeric:tabular-nums}
+.slist b{display:inline}
+.slist .c{color:var(--ink-soft);font-size:14px}
+
+/* FR */
+.legend{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:16px;align-items:center}
+.pr{font-family:var(--f-display);font-size:12px;font-weight:700;width:26px;height:26px;border-radius:8px;display:inline-grid;place-items:center;flex:none}
+.pr.M{background:var(--peach-mid);color:#2B2340}
+.pr.S{background:var(--lav-mid);color:#2B2340}
+.pr.C{background:var(--line);color:var(--ink-soft)}
+.frs{display:grid;gap:12px;grid-template-columns:repeat(2,minmax(0,1fr))}
+@media (max-width:760px){.frs{grid-template-columns:1fr}}
+.fr{background:var(--surface);border:1px solid var(--line);border-radius:18px;padding:16px 18px}
+.fr header{display:flex;gap:10px;align-items:center;margin-bottom:8px}
+.fr .id{font-family:var(--f-mono);font-size:12px;color:var(--ink-soft)}
+.fr h3{margin:0;font-size:15px}
+.fr ul{margin:0;padding-left:18px;font-size:14.5px;color:var(--ink-soft)}
+.fr li{margin-bottom:4px}
+.fr li b{color:var(--ink)}
+.fr.wide{grid-column:1/-1}
+
+/* Age picker demo */
+.demo{background:var(--bg-alt);border-radius:24px;padding:20px;display:grid;gap:16px}
+.demo-tag{font-family:var(--f-hand);font-size:22px;color:var(--peach-ink);line-height:1}
+.ages{display:flex;flex-wrap:wrap;gap:8px}
+.ages button{width:48px;height:48px;border-radius:50%;border:2px solid var(--lav-mid);background:var(--surface);color:var(--ink);font:800 17px var(--f-body);cursor:pointer;transition:transform .15s,background .15s}
+.ages button:hover{transform:translateY(-2px)}
+.ages button[aria-pressed="true"]{background:var(--lav-ink);border-color:var(--lav-ink);color:var(--bg)}
+@media (max-width:420px){.ages button{width:44px;height:44px}}
+.result{font-size:18px}
+.result b{font-family:var(--f-display);font-weight:600}
+.msg{font-size:14px;background:var(--surface);border:1px solid var(--line);border-radius:16px 16px 16px 4px;padding:10px 14px;max-width:560px}
+.msg small{display:block;color:var(--ink-soft);font-size:12px;font-weight:700;margin-bottom:2px}
+.gcards{display:grid;gap:12px;grid-template-columns:repeat(3,minmax(0,1fr))}
+@media (max-width:760px){.gcards{grid-template-columns:1fr}}
+.gcard{border-radius:20px;padding:18px;border:2px solid transparent;background:var(--surface);display:flex;flex-direction:column;gap:8px;transition:transform .2s,border-color .2s,box-shadow .2s;position:relative}
+.gcard.peach{--c:var(--peach);--cm:var(--peach-mid);--ci:var(--peach-ink)}
+.gcard.lav{--c:var(--lav);--cm:var(--lav-mid);--ci:var(--lav-ink)}
+.gcard.rose{--c:var(--rose);--cm:var(--rose-mid);--ci:var(--rose-ink)}
+.gcard .top{display:flex;justify-content:space-between;align-items:center;gap:8px}
+.gcard h3{font-size:20px;margin:0}
+.gcard .age{background:var(--c);color:var(--ci);font-weight:800;font-size:13px;border-radius:999px;padding:3px 10px}
+.gcard ul{margin:0;padding-left:18px;font-size:14px;color:var(--ink-soft);flex:1}
+.gcard .when{font-size:13.5px;font-weight:700;border-top:1px dashed var(--cm);padding-top:8px}
+.gcard .when span{display:block;color:var(--ink-soft);font-weight:600}
+.gcard.match{border-color:var(--ci);transform:translateY(-4px);box-shadow:var(--shadow)}
+.gcard .badge{position:absolute;top:-11px;left:16px;background:var(--ci);color:var(--bg);font-size:12px;font-weight:800;border-radius:999px;padding:2px 10px}
+
+/* Schedule */
+.filters{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:14px}
+.filters button{border:1.5px solid var(--lav-mid);background:var(--surface);color:var(--ink);font:700 14px var(--f-body);padding:7px 14px;border-radius:999px;cursor:pointer}
+.filters button[aria-pressed="true"]{background:var(--lav-ink);border-color:var(--lav-ink);color:var(--bg)}
+.week{display:grid;grid-template-columns:repeat(7,minmax(0,1fr));gap:8px}
+.day{background:var(--surface);border:1px solid var(--line);border-radius:16px;padding:10px;display:flex;flex-direction:column;gap:6px;position:relative;min-width:0}
+.day.today{border:2px solid var(--peach-ink)}
+.day .dn{font-family:var(--f-display);font-weight:600;font-size:14px;display:flex;justify-content:space-between;align-items:center;gap:4px}
+.day .dn em{font-style:normal;font-family:var(--f-body);font-size:11px;font-weight:800;background:var(--peach-ink);color:var(--bg);padding:1px 7px;border-radius:999px}
+.lesson{border-radius:10px;padding:7px 9px;font-size:13px;line-height:1.3;transition:opacity .2s}
+.lesson b{display:block;font-variant-numeric:tabular-nums}
+.lesson.p{background:var(--peach)} .lesson.l{background:var(--lav)} .lesson.r{background:var(--rose)}
+.lesson.t{background:var(--surface);border:1.5px dashed var(--peach-ink)}
+.lesson.dim{opacity:.28}
+.off{font-family:var(--f-hand);font-size:22px;color:var(--ink-soft)}
+.bringlist{margin-top:14px;display:flex;flex-wrap:wrap;gap:8px;align-items:center}
+.bringlist .hand{font-size:22px;color:var(--peach-ink);margin-right:4px}
+@media (max-width:1040px){
+  .week{grid-template-columns:1fr}
+  .day{display:grid;grid-template-columns:110px minmax(0,1fr);align-items:start}
+  .day .lessons{display:flex;flex-wrap:wrap;gap:6px}
+}
+@media (max-width:540px){.day{grid-template-columns:1fr}}
+.lessons{display:grid;gap:6px}
+
+/* Coaches */
+.coach{display:flex;flex-direction:column;gap:10px}
+.av{width:56px;height:56px;border-radius:50%;display:grid;place-items:center;font-family:var(--f-display);font-weight:700;font-size:17px;color:#2B2340}
+.coach ul{margin:0;padding-left:18px;font-size:14px;color:var(--ink-soft)}
+.quote{font-family:var(--f-hand);font-size:clamp(24px,3vw,32px);line-height:1.2;color:var(--lav-ink);margin:20px 0 0;padding:18px 22px;background:var(--lav);border-radius:24px}
+.quote cite{display:block;font-family:var(--f-body);font-style:normal;font-size:14px;font-weight:700;color:var(--ink-soft);margin-top:6px}
+
+/* Apparatus */
+.app{display:flex;gap:12px;align-items:flex-start}
+.app svg{flex:none}
+.app b{display:block}
+.hours{display:flex;flex-wrap:wrap;gap:8px;margin-top:14px}
+
+/* Palette */
+.sw{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:12px}
+.swatch{border-radius:16px;overflow:hidden;border:1px solid var(--line);background:var(--surface)}
+.swatch .pair{display:grid;grid-template-columns:1fr 1fr;height:64px}
+.swatch .pair div{display:flex;align-items:flex-end;padding:6px 8px;font:600 10px var(--f-mono)}
+.swatch .lab{padding:8px 10px;font-size:13px}
+.swatch .lab code{font-size:11px}
+.fonts{display:grid;gap:12px}
+.font{display:grid;grid-template-columns:minmax(0,1fr) 200px;gap:16px;align-items:center;background:var(--surface);border:1px solid var(--line);border-radius:18px;padding:16px 20px}
+@media (max-width:600px){.font{grid-template-columns:1fr;gap:4px}}
+.font .spec{font-size:30px;line-height:1.15;overflow-wrap:anywhere}
+.font .info{font-size:13px;color:var(--ink-soft)}
+.font .info b{color:var(--ink);display:block;font-size:14px}
+.icons{display:flex;flex-wrap:wrap;gap:10px}
+.ico{display:flex;flex-direction:column;align-items:center;gap:4px;font-size:12px;color:var(--ink-soft);width:72px}
+.ico span{width:48px;height:48px;border-radius:14px;background:var(--lav);display:grid;place-items:center;color:var(--lav-ink)}
+.btns{display:flex;flex-wrap:wrap;gap:10px}
+.btn{border-radius:999px;padding:10px 18px;font-weight:800;font-size:15px;border:0}
+.btn.pri{background:var(--peach-mid);color:#2B2340}
+.btn.sec{background:var(--lav-mid);color:#2B2340}
+
+/* Breakpoints */
+.bp{position:relative;padding:8px 0 0}
+.bp svg{width:100%;height:auto;display:block;min-width:620px}
+.bp-wrap{overflow-x:auto}
+
+/* Checklist */
+.checks{list-style:none;padding:0;margin:0;display:grid;gap:8px}
+.checks label{display:flex;gap:12px;align-items:flex-start;background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:12px 14px;cursor:pointer}
+.checks input{width:20px;height:20px;accent-color:var(--lav-ink);flex:none;margin-top:2px}
+.checks input:checked + span{color:var(--ink-soft);text-decoration:line-through;text-decoration-color:var(--lav-mid)}
+.progress{display:flex;align-items:center;gap:12px;margin-bottom:14px;font-weight:700}
+.bar{flex:1;height:10px;background:var(--lav);border-radius:999px;overflow:hidden;max-width:320px}
+.bar i{display:block;height:100%;background:var(--lav-ink);width:0;transition:width .3s}
+
+.qa{list-style:none;padding:0;margin:0;display:grid;gap:8px;counter-reset:q}
+.qa li{display:flex;gap:12px;background:var(--surface);border:1px dashed var(--peach-mid);border-radius:14px;padding:12px 14px}
+.qa li::before{counter-increment:q;content:"?" counter(q);font-family:var(--f-display);font-weight:700;color:var(--peach-ink);font-size:14px;min-width:26px}
+.ideas{display:flex;flex-wrap:wrap;gap:10px}
+.ideas span{background:var(--surface);border:1.5px dashed var(--lav-mid);border-radius:999px;padding:8px 16px;font-weight:700;font-size:14px}
+
+footer{margin-top:72px;padding-top:24px;border-top:1px dashed var(--lav-mid);color:var(--ink-soft);font-size:14px;display:flex;flex-wrap:wrap;justify-content:space-between;gap:12px}
+
+@keyframes fly{from{offset-distance:0%}to{offset-distance:100%}}
+.dot-fly{offset-path:path("M40 150 C 120 20, 260 20, 330 120");animation:fly 3.2s ease-in-out infinite alternate}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<nav class="toc" aria-label="Содержание">
+  <a class="logo" href="#top">
+    <svg width="34" height="34" viewBox="0 0 34 34" aria-hidden="true"><circle cx="17" cy="17" r="17" fill="var(--lav-mid)"/><path d="M7 23 C 11 9, 22 8, 27 18" fill="none" stroke="var(--lav-ink)" stroke-width="2" stroke-dasharray="3 3" stroke-linecap="round"/><circle cx="27" cy="18" r="3.4" fill="var(--peach-ink)"/></svg>
+    PRD «Ласточка»
+  </a>
+  <ol>
+    <li><a class="i" href="#s1"><span>1</span>Кратко</a></li>
+    <li><a class="i" href="#s2"><span>2</span>Цели и метрики</a></li>
+    <li><a class="i" href="#s3"><span>3</span>Аудитория</a></li>
+    <li><a class="i" href="#s4"><span>4</span>Объём работ</a></li>
+    <li><a class="i" href="#s5"><span>5</span>Структура</a></li>
+    <li><a class="i" href="#s6"><span>6</span>Функции</a></li>
+    <li><a class="i" href="#s7"><span>7</span>Интеграции</a></li>
+    <li><a class="i" href="#s8"><span>8</span>Контент</a></li>
+    <li><a class="i" href="#s9"><span>9</span>Дизайн</a></li>
+    <li><a class="i" href="#s10"><span>10</span>Нефункциональные</a></li>
+    <li><a class="i" href="#s11"><span>11</span>Приёмка</a></li>
+    <li><a class="i" href="#s12"><span>12</span>Заглушки</a></li>
+    <li><a class="i" href="#s13"><span>13</span>Вопросы</a></li>
+    <li><a class="i" href="#s14"><span>14</span>Идеи v2</a></li>
+  </ol>
+</nav>
+
+<main id="top">
+
+<header class="hero">
+  <div>
+    <div class="eyebrow">Product Requirements · v1.0 · 28.09.2026</div>
+    <h1>Сайт секции спортивной гимнастики «<mark>Ласточка</mark>»</h1>
+    <p class="lede">Одностраничный сайт для детей 4–12 лет. Один HTML-файл: разметка, стили и скрипт внутри, без сборки и библиотек.</p>
+    <div class="meta">
+      <span class="chip ok">● Прототип v1 собран и опубликован</span>
+      <span class="chip peach">Данные клуба — заглушки</span>
+      <span class="chip">1 HTML-файл</span>
+    </div>
+  </div>
+  <div class="hero-art" aria-label="Иллюстрация: гимнастка в позе «ласточка» на бревне и траектория прыжка">
+    <svg viewBox="0 0 380 230" role="img">
+      <path d="M40 150 C 120 20, 260 20, 330 120" fill="none" stroke="var(--lav-ink)" stroke-width="2.5" stroke-dasharray="6 7" stroke-linecap="round" opacity=".6"/>
+      <circle class="dot-fly" r="7" fill="var(--peach-ink)"/>
+      <rect x="120" y="178" width="200" height="10" rx="5" fill="var(--lav-ink)"/>
+      <rect x="140" y="188" width="6" height="30" fill="var(--lav-mid)"/><rect x="294" y="188" width="6" height="30" fill="var(--lav-mid)"/>
+      <g stroke="var(--ink)" stroke-width="5" stroke-linecap="round" fill="none">
+        <line x1="222" y1="176" x2="222" y2="140"/>
+        <line x1="222" y1="140" x2="186" y2="126"/>
+        <line x1="222" y1="140" x2="262" y2="118"/>
+        <line x1="262" y1="118" x2="296" y2="104"/>
+        <line x1="240" y1="132" x2="258" y2="108"/>
+        <line x1="240" y1="132" x2="226" y2="104"/>
+      </g>
+      <circle cx="276" cy="110" r="9" fill="var(--peach-mid)" stroke="var(--ink)" stroke-width="3"/>
+      <text x="30" y="210" class="hand" font-size="24" fill="var(--peach-ink)">вот она — «ласточка»!</text>
+    </svg>
+  </div>
+</header>
+
+<!-- 1 -->
+<section id="s1">
+  <div class="sh"><span class="n">1</span><h2>Кратко о продукте</h2></div>
+  <p>Главная задача сайта: родитель быстро записывает ребёнка на бесплатное пробное занятие. Для этого сайт отвечает на три вопроса.</p>
+  <div class="funnel" style="margin-top:16px">
+    <div class="q">Какая группа подходит?<small>подбор по возрасту</small></div>
+    <div class="q">Когда занятия?<small>расписание с фильтром</small></div>
+    <div class="q">Как записаться?<small>готовый текст в WhatsApp</small></div>
+    <div class="arrow" aria-hidden="true">→</div>
+    <div class="goal">
+      <div class="p"><small>Основное действие</small>Сообщение в WhatsApp с готовым текстом</div>
+      <div class="s"><small>Второе действие</small>Переход в Instagram клуба</div>
+    </div>
+  </div>
+</section>
+
+<!-- 2 -->
+<section id="s2">
+  <div class="sh"><span class="n">2</span><h2>Цели и метрики</h2></div>
+  <ul class="goals">
+    <li>Родитель за минуту находит группу по возрасту ребёнка, её расписание и способ записи.</li>
+    <li>Запись занимает не больше двух нажатий, текст сообщения набирать не нужно.</li>
+    <li>Сайт вызывает доверие: видно, что занятия безопасные, а тренеры квалифицированные.</li>
+    <li>Сайт ведёт трафик в Instagram, где клуб публикует видео и новости.</li>
+  </ul>
+  <h3 style="margin-top:28px">Метрики <span class="muted small" style="font-family:var(--f-body);font-weight:600">после подключения аналитики</span></h3>
+  <div class="tbl">
+    <table>
+      <thead><tr><th>Метрика</th><th>Как считать</th></tr></thead>
+      <tbody>
+        <tr><td>Конверсия в запись</td><td>клики по любой кнопке WhatsApp ÷ визиты</td></tr>
+        <tr><td>Переходы в Instagram</td><td>клики по любой кнопке Instagram ÷ визиты</td></tr>
+        <tr><td>Использование подбора группы</td><td>доля визитов хотя бы с одним нажатием на кнопку возраста</td></tr>
+        <tr><td>Интерес к адресу</td><td>клики по кнопкам карт и «Скопировать адрес»</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <p class="muted small" style="margin-top:10px">Целевые значения задаются после первого месяца работы, когда появится базовая статистика.</p>
+</section>
+
+<!-- 3 -->
+<section id="s3">
+  <div class="sh"><span class="n">3</span><h2>Аудитория</h2></div>
+  <div class="grid g3">
+    <div class="card"><span class="chip peach">Основной</span><h3 style="margin-top:10px">Родители детей 4–12 лет</h3><p class="muted small">Ищут секцию рядом с домом. В основном с телефона, часто переходят из Instagram.</p></div>
+    <div class="card"><span class="chip">Дополнительный</span><h3 style="margin-top:10px">Родители тех, кто уже ходит</h3><p class="muted small">Смотрят расписание и контакты. С телефона.</p></div>
+    <div class="card"><span class="chip rose">Косвенный</span><h3 style="margin-top:10px">Дети 10–12 лет</h3><p class="muted small">Сами смотрят видео клуба. С телефона.</p></div>
+  </div>
+  <div class="panel" style="margin-top:16px">
+    <h3>Пользовательские истории <span class="muted small" style="font-family:var(--f-body)">«Как родитель, я хочу…»</span></h3>
+    <div class="grid g2 small" style="gap:8px 24px">
+      <div>• выбрать возраст ребёнка и сразу увидеть подходящую группу;</div>
+      <div>• видеть расписание только своей группы;</div>
+      <div>• записаться на пробное в пару нажатий, без набора текста;</div>
+      <div>• открыть адрес в своём приложении карт;</div>
+      <div>• знать, что взять на первое занятие;</div>
+      <div>• убедиться, что занятия безопасные и тренеры опытные;</div>
+      <div>• посмотреть Instagram клуба с видео тренировок.</div>
+    </div>
+  </div>
+</section>
+
+<!-- 4 -->
+<section id="s4">
+  <div class="sh"><span class="n">4</span><h2>Объём работ</h2></div>
+  <div class="grid g2 scope">
+    <div class="card yes">
+      <h3><span class="chip ok">Входит в v1</span></h3>
+      <ul>
+        <li>Шапка с навигацией и быстрыми кнопками</li>
+        <li>Первый экран с призывом записаться</li>
+        <li>Подбор группы по возрасту и карточки трёх групп</li>
+        <li>Недельное расписание с фильтром по группам</li>
+        <li>«О клубе»: принципы работы, зал и снаряды</li>
+        <li>«Тренеры» с цитатой старшего тренера</li>
+        <li>Контакты: Instagram, WhatsApp, адрес, схема проезда, часы, ссылки на карты</li>
+        <li>Плавающие кнопки Instagram и WhatsApp</li>
+        <li>Светлая и тёмная тема, адаптивная вёрстка</li>
+      </ul>
+    </div>
+    <div class="card no">
+      <h3><span class="chip rose">Не входит в v1</span></h3>
+      <ul>
+        <li>Онлайн-оплата, абонементы, раздел цен</li>
+        <li>Личный кабинет, онлайн-запись с отправкой на сервер</li>
+        <li>Система управления контентом (CMS)</li>
+        <li>Встроенная интерактивная карта</li>
+        <li>Лента Instagram на сайте</li>
+        <li>Отзывы родителей и фотогалерея</li>
+        <li>Вторая языковая версия</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- 5 -->
+<section id="s5">
+  <div class="sh"><span class="n">5</span><h2>Структура страницы</h2></div>
+  <div class="struct">
+    <div class="phone" id="phone" aria-hidden="true">
+      <div class="blk b-head" data-k="1">≡ Шапка <code>sticky</code></div>
+      <div class="blk b-hero" data-k="2">Первый экран <code>#top</code></div>
+      <div class="blk b-groups" data-k="3">Группы <code>#groups</code></div>
+      <div class="blk b-sched" data-k="4">Расписание <code>#schedule</code></div>
+      <div class="blk" data-k="5">О клубе <code>#about</code></div>
+      <div class="blk" data-k="6">Тренеры <code>#coaches</code></div>
+      <div class="blk" data-k="7">Контакты <code>#contacts</code></div>
+      <div class="blk b-foot" data-k="8">Подвал</div>
+      <div class="fabs" data-k="9"><i style="background:var(--lav-mid)"></i><i style="background:var(--peach-mid)"></i></div>
+    </div>
+    <ul class="slist" id="slist">
+      <li data-k="1"><span class="k">1</span><div><b>Шапка</b> <span class="muted small">закреплена сверху</span><div class="c">Логотип, 5 пунктов меню, кнопка Instagram, «Записаться», бургер на телефоне</div></div></li>
+      <li data-k="2"><span class="k">2</span><div><b>Первый экран</b> <code>#top</code><div class="c">Заголовок, подзаголовок, 3 кнопки, 3 факта о клубе, иллюстрация</div></div></li>
+      <li data-k="3"><span class="k">3</span><div><b>Группы</b> <code>#groups</code><div class="c">Подбор по возрасту, 3 карточки групп</div></div></li>
+      <li data-k="4"><span class="k">4</span><div><b>Расписание</b> <code>#schedule</code><div class="c">Фильтр групп, неделя Пн–Вс, памятка «Что взять на первое занятие»</div></div></li>
+      <li data-k="5"><span class="k">5</span><div><b>О клубе</b> <code>#about</code><div class="c">Текст о клубе, 3 принципа, «Зал и снаряды»</div></div></li>
+      <li data-k="6"><span class="k">6</span><div><b>Тренеры</b> <code>#coaches</code><div class="c">3 карточки тренеров, цитата</div></div></li>
+      <li data-k="7"><span class="k">7</span><div><b>Контакты</b> <code>#contacts</code><div class="c">Карточки Instagram, WhatsApp, адреса со схемой</div></div></li>
+      <li data-k="8"><span class="k">8</span><div><b>Подвал</b><div class="c">Логотип, кнопки Instagram и WhatsApp, копирайт с текущим годом</div></div></li>
+      <li data-k="9"><span class="k">+</span><div><b>Плавающие кнопки и уведомление</b><div class="c">Instagram и WhatsApp в правом нижнем углу; короткое сообщение внизу после копирования</div></div></li>
+    </ul>
+  </div>
+</section>
+
+<!-- 6 -->
+<section id="s6">
+  <div class="sh"><span class="n">6</span><h2>Функциональные требования</h2></div>
+  <div class="legend small"><span class="pr M">M</span> обязательно <span class="pr S" style="margin-left:10px">S</span> желательно <span class="pr C" style="margin-left:10px">C</span> можно отложить</div>
+
+  <div class="demo" style="margin-bottom:16px">
+    <div style="display:flex;flex-wrap:wrap;justify-content:space-between;gap:8px;align-items:baseline">
+      <h3 style="margin:0"><span class="id" style="font-family:var(--f-mono);font-size:12px;color:var(--ink-soft)">FR-03 · FR-04</span><br>Подбор группы по возрасту</h3>
+      <span class="demo-tag">живой пример — нажмите возраст</span>
+    </div>
+    <div>
+      <div style="font-weight:800;margin-bottom:8px">Сколько лет ребёнку?</div>
+      <div class="ages" id="ages" role="group" aria-label="Возраст ребёнка"></div>
+    </div>
+    <div class="result" id="result" aria-live="polite"></div>
+    <div class="msg" id="msg"></div>
+    <div class="gcards" id="gcards">
+      <article class="gcard peach" data-g="Птенцы">
+        <div class="top"><h3>Птенцы</h3><span class="age">4–6 лет</span></div>
+        <ul><li>кувырок вперёд и назад</li><li>«берёзка» и «мостик» со страховкой</li><li>ходьба по низкому бревну</li><li>прыжки на батуте</li></ul>
+        <div class="when">3 раза в неделю по 45 мин<span>Вт, Чт 16:00 · Сб 10:00</span></div>
+      </article>
+      <article class="gcard lav" data-g="Ласточки">
+        <div class="top"><h3>Ласточки</h3><span class="age">7–9 лет</span></div>
+        <ul><li>колесо и рондат</li><li>стойка на руках</li><li>«ласточка» на бревне</li><li>вис и размахивание на брусьях</li></ul>
+        <div class="when">3 раза в неделю по 60 мин<span>Пн, Ср, Пт 17:00</span></div>
+      </article>
+      <article class="gcard rose" data-g="Стрижи">
+        <div class="top"><h3>Стрижи</h3><span class="age">10–12 лет</span></div>
+        <ul><li>сальто на акробатической дорожке</li><li>опорный прыжок через стол</li><li>комбинация на бревне</li><li>вольные упражнения под музыку</li></ul>
+        <div class="when">4 раза в неделю по 90 мин<span>Пн, Ср 18:15 · Вт, Чт 17:00</span></div>
+      </article>
+    </div>
+  </div>
+
+  <div class="frs">
+    <div class="fr"><header><span class="pr M">M</span><div><div class="id">FR-01</div><h3>Шапка</h3></div></header>
+      <ul><li>Закреплена сверху, учитывает безопасную зону телефона; логотип ведёт в начало.</li><li>Меню: Группы, Расписание, О клубе, Тренеры, Контакты — плавная прокрутка (без анимации при отключённом движении).</li><li>Кнопка Instagram (иконка) и «Записаться» (WhatsApp).</li><li><b>≤ 900 px</b>: бургер с <code>aria-expanded</code> и подписью «Открыть / Закрыть меню», закрывается после выбора пункта.</li><li><b>≤ 520 px</b>: «Записаться» в шапке скрыта — она есть на первом экране.</li></ul></div>
+    <div class="fr"><header><span class="pr M">M</span><div><div class="id">FR-02</div><h3>Первый экран</h3></div></header>
+      <ul><li>Надзаголовок «Спортивная гимнастика · 4–12 лет».</li><li>Заголовок «Первый кувырок, первая «ласточка», первая медаль», слово «ласточка» на персиковой подложке.</li><li>Кнопки: «Записаться на пробное», «Мы в Instagram», «Подобрать группу» → <code>#groups</code>.</li><li>Факты: 10 детей максимум · 3 группы · ковёр 12 × 12 м.</li><li>SVG: гимнастка на бревне, пунктирная траектория с движущейся точкой, подпись от руки. При <code>prefers-reduced-motion</code> — пауза.</li></ul></div>
+    <div class="fr"><header><span class="pr M">M</span><div><div class="id">FR-03</div><h3>Подбор группы</h3></div></header>
+      <ul><li>9 круглых кнопок 4–12, активна одна (<code>aria-pressed</code>), по умолчанию <b>7</b>.</li><li>Строка «N лет — это группа «X»» со склонением год / года / лет.</li><li>Кнопка «Записаться в «X»» с текстом про возраст и группу.</li><li>Подходящая карточка: рамка, подъём, бейдж «Подходит по возрасту».</li><li>Результат озвучивается: <code>aria-live="polite"</code>.</li></ul></div>
+    <div class="fr"><header><span class="pr M">M</span><div><div class="id">FR-04</div><h3>Карточки групп</h3></div></header>
+      <ul><li>Название, возрастная плашка, описание в 1–2 предложения.</li><li>«Чему научимся» — 4 пункта; частота, длительность, дни и время.</li><li>«Записаться» (WhatsApp про эту группу) и «Расписание →» — включает фильтр и прокручивает.</li><li>Цвета: Птенцы — персиковый, Ласточки — лавандовый, Стрижи — розовый. Кнопки прижаты к низу.</li></ul></div>
+    <div class="fr"><header><span class="pr M">M</span><div><div class="id">FR-05</div><h3>Расписание</h3></div></header>
+      <ul><li>Сетка Пн–Вс, текущий день с рамкой и плашкой «сегодня».</li><li>Фильтр: чужие занятия полупрозрачные, но остаются на месте.</li><li>Пробное в субботу видно при любом фильтре, со своей кнопкой.</li><li>Раскладка: <b>&gt;1040</b> — 7 колонок; <b>541–1040</b> — список, день слева; <b>≤540</b> — день над занятиями.</li></ul></div>
+    <div class="fr"><header><span class="pr S">S</span><div><div class="id">FR-06</div><h3>Памятка на первое занятие</h3></div></header>
+      <ul><li>Купальник или футболка с шортами, бутылка воды, резинка для волос.</li><li>Обувь не нужна: босиком или в чешках.</li></ul></div>
+    <div class="fr"><header><span class="pr M">M</span><div><div class="id">FR-07</div><h3>О клубе</h3></div></header>
+      <ul><li>Два абзаца: берём с нуля, что развивает гимнастика.</li><li>Три принципа с иконками: страховка на каждом новом элементе, до 10 детей, соревнования по желанию.</li><li>«Зал и снаряды» с размерами (8.4).</li></ul></div>
+    <div class="fr"><header><span class="pr M">M</span><div><div class="id">FR-08</div><h3>Тренеры</h3></div></header>
+      <ul><li>Три карточки: аватар с инициалами в цвете группы, имя, роль, 3 факта.</li><li>Цитата старшего тренера рукописным шрифтом.</li></ul></div>
+    <div class="fr"><header><span class="pr M">M</span><div><div class="id">FR-09</div><h3>Контакты</h3></div></header>
+      <ul><li><b>Instagram</b>: ник крупно, «Открыть Instagram», «Скопировать ник».</li><li><b>WhatsApp</b>: номер крупно и выделяемый, «Написать», «Скопировать номер».</li><li><b>Адрес</b>: схема с «Мы здесь», часы, Google / Яндекс / 2ГИС, «Скопировать адрес».</li><li>Широкий экран: соцсети слева столбиком, адрес справа; ≤ 900 px — одна колонка.</li></ul></div>
+    <div class="fr"><header><span class="pr S">S</span><div><div class="id">FR-10</div><h3>Плавающие кнопки</h3></div></header>
+      <ul><li>Instagram и WhatsApp в правом нижнем углу, видны всегда.</li><li>54 px, на ≤ 600 px — 48 px; учитывают безопасную зону.</li></ul></div>
+    <div class="fr"><header><span class="pr S">S</span><div><div class="id">FR-11</div><h3>Копирование</h3></div></header>
+      <ul><li>Clipboard API внутри обработчика нажатия.</li><li>Если не вышло — текст выделяется, подсказка «Текст выделен, скопируйте его».</li><li>Успех — уведомление на 2,4 с: «Ник / Номер / Адрес скопирован».</li></ul></div>
+    <div class="fr"><header><span class="pr M">M</span><div><div class="id">FR-12</div><h3>Внешние ссылки</h3></div></header>
+      <ul><li>Instagram, WhatsApp и карты открываются в новой вкладке: <code>target="_blank"</code>, <code>rel="noopener"</code>.</li></ul></div>
+    <div class="fr wide"><header><span class="pr M">M</span><div><div class="id">FR-13</div><h3>Единый блок настроек <code>CLUB</code></h3></div></header>
+      <p class="small muted" style="margin:0 0 10px">Все ссылки и тексты на странице берутся из одного объекта в начале скрипта.</p>
+      <div class="tbl"><table style="font-family:var(--f-mono);font-size:13px">
+        <tbody>
+          <tr><td>instagram</td><td>'lastochka_gym'</td><td style="font-family:var(--f-body)" class="muted">ник без @</td></tr>
+          <tr><td>whatsapp</td><td>'70000000000'</td><td style="font-family:var(--f-body)" class="muted">только цифры, с кодом страны</td></tr>
+          <tr><td>phoneLabel</td><td>'+7 (000) 000-00-00'</td><td style="font-family:var(--f-body)" class="muted">как номер показан на сайте</td></tr>
+          <tr><td>address</td><td>'ул. Садовая, 12, спорткомплекс «Олимп», 2 этаж'</td><td style="font-family:var(--f-body)" class="muted">адрес для текста и карт</td></tr>
+        </tbody>
+      </table></div>
+    </div>
+  </div>
+</section>
+
+<!-- 7 -->
+<section id="s7">
+  <div class="sh"><span class="n">7</span><h2>Интеграции и шаблоны ссылок</h2></div>
+  <div class="tbl">
+    <table>
+      <thead><tr><th>Сервис</th><th>Шаблон ссылки</th></tr></thead>
+      <tbody>
+        <tr><td>Instagram</td><td><code>https://www.instagram.com/{instagram}/</code></td></tr>
+        <tr><td>WhatsApp</td><td><code>https://wa.me/{whatsapp}?text={текст в URL-кодировке}</code></td></tr>
+        <tr><td>Google Карты</td><td><code>https://www.google.com/maps/search/?api=1&amp;query={адрес}</code></td></tr>
+        <tr><td>Яндекс Карты</td><td><code>https://yandex.ru/maps/?text={адрес}</code></td></tr>
+        <tr><td>2ГИС</td><td><code>https://2gis.ru/search/{адрес}</code></td></tr>
+      </tbody>
+    </table>
+  </div>
+  <h3 style="margin-top:28px">Готовые сообщения WhatsApp</h3>
+  <div class="grid g2">
+    <div class="msg" style="max-width:none"><small>Шапка, первый экран, контакты, подвал, плавающая кнопка</small>Здравствуйте! Хочу записать ребёнка на пробное занятие по гимнастике.</div>
+    <div class="msg" style="max-width:none"><small>Подбор по возрасту</small>Здравствуйте! Хочу записать ребёнка (<b>{N лет}</b>) в группу «<b>{Группа}</b>» на пробное занятие.</div>
+    <div class="msg" style="max-width:none"><small>Карточка группы</small>Здравствуйте! Хочу записать ребёнка в группу «<b>{Группа}</b>» (<b>{возраст}</b>) на пробное занятие.</div>
+    <div class="msg" style="max-width:none"><small>Пробное занятие в расписании</small>Здравствуйте! Хочу записать ребёнка на пробное занятие в субботу в 11:00.</div>
+  </div>
+</section>
+
+<!-- 8 -->
+<section id="s8">
+  <div class="sh"><span class="n">8</span><h2>Контент v1</h2></div>
+  <p class="muted">Весь контент — пример. Перед запуском его нужно сверить с реальными данными клуба. Группы — в живом примере раздела 6.</p>
+
+  <h3 style="margin-top:24px">8.2. Расписание</h3>
+  <div class="panel">
+    <div class="filters" id="filters" role="group" aria-label="Фильтр групп">
+      <button type="button" data-f="all" aria-pressed="true">Все группы</button>
+      <button type="button" data-f="p" aria-pressed="false">Птенцы · 4–6</button>
+      <button type="button" data-f="l" aria-pressed="false">Ласточки · 7–9</button>
+      <button type="button" data-f="r" aria-pressed="false">Стрижи · 10–12</button>
+    </div>
+    <div class="week" id="week"></div>
+    <div class="bringlist"><span class="hand">Что взять на первое занятие:</span><span class="chip">купальник или футболка с шортами</span><span class="chip">бутылка воды</span><span class="chip">резинка для волос</span><span class="chip peach">обувь не нужна — босиком или в чешках</span></div>
+  </div>
+
+  <h3 style="margin-top:32px">8.3. Тренеры</h3>
+  <div class="grid g3">
+    <div class="card coach"><div class="av" style="background:var(--rose-mid)">АБ</div><div><h3 style="margin:0">Анна Белова</h3><div class="muted small">Старший тренер, ведёт «Стрижей»</div></div><ul><li>мастер спорта по спортивной гимнастике</li><li>14 лет тренирует детей</li><li>судья первой категории</li></ul></div>
+    <div class="card coach"><div class="av" style="background:var(--lav-mid)">МК</div><div><h3 style="margin:0">Мария Ковалёва</h3><div class="muted small">Тренер, ведёт «Ласточек»</div></div><ul><li>КМС по спортивной гимнастике</li><li>хореограф, ставит вольные под музыку</li><li>8 лет тренирует детей</li></ul></div>
+    <div class="card coach"><div class="av" style="background:var(--peach-mid)">ДО</div><div><h3 style="margin:0">Дмитрий Орлов</h3><div class="muted small">Тренер, ведёт «Птенцов»</div></div><ul><li>тренер по акробатике и ОФП</li><li>превращает разминку в игру</li><li>6 лет тренирует детей</li></ul></div>
+  </div>
+  <blockquote class="quote">«Главная победа — не медаль. Это день, когда ребёнок сам встал на мостик и засмеялся».<cite>Анна Белова, старший тренер</cite></blockquote>
+
+  <h3 style="margin-top:32px">8.4. Зал и снаряды</h3>
+  <div class="grid g3">
+    <div class="card app"><svg width="44" height="44" viewBox="0 0 44 44" aria-hidden="true"><rect x="4" y="18" width="36" height="5" rx="2.5" fill="var(--lav-ink)"/><rect x="9" y="23" width="3" height="14" fill="var(--lav-mid)"/><rect x="32" y="23" width="3" height="14" fill="var(--lav-mid)"/></svg><div><b>Бревно</b><span class="muted small">10 см в ширину. Малыши начинают на низком, 30 см от пола</span></div></div>
+    <div class="card app"><svg width="44" height="44" viewBox="0 0 44 44" aria-hidden="true"><line x1="6" y1="12" x2="24" y2="12" stroke="var(--lav-ink)" stroke-width="3" stroke-linecap="round"/><line x1="20" y1="22" x2="38" y2="22" stroke="var(--lav-ink)" stroke-width="3" stroke-linecap="round"/><line x1="10" y1="12" x2="10" y2="38" stroke="var(--lav-mid)" stroke-width="2"/><line x1="34" y1="22" x2="34" y2="38" stroke="var(--lav-mid)" stroke-width="2"/><rect x="4" y="36" width="36" height="5" rx="2" fill="var(--peach-mid)"/></svg><div><b>Брусья</b><span class="muted small">Разновысокие, над поролоновой ямой</span></div></div>
+    <div class="card app"><svg width="44" height="44" viewBox="0 0 44 44" aria-hidden="true"><path d="M4 36 L16 30 L16 36 Z" fill="var(--lav-mid)"/><rect x="24" y="16" width="16" height="7" rx="3" fill="var(--lav-ink)"/><rect x="30" y="23" width="4" height="15" fill="var(--lav-mid)"/></svg><div><b>Опорный прыжок</b><span class="muted small">Гимнастический мостик и мягкий стол</span></div></div>
+    <div class="card app"><svg width="44" height="44" viewBox="0 0 44 44" aria-hidden="true"><rect x="5" y="5" width="34" height="34" rx="4" fill="var(--peach)" stroke="var(--peach-ink)" stroke-width="2"/><text x="22" y="26" text-anchor="middle" font-size="9" font-weight="800" fill="var(--peach-ink)">12×12</text></svg><div><b>Вольные упражнения</b><span class="muted small">Ковёр 12 × 12 м</span></div></div>
+    <div class="card app"><svg width="44" height="44" viewBox="0 0 44 44" aria-hidden="true"><path d="M4 30 Q 22 40 40 30" fill="none" stroke="var(--lav-ink)" stroke-width="3"/><path d="M14 22 C 18 6, 30 6, 32 20" fill="none" stroke="var(--peach-ink)" stroke-width="2" stroke-dasharray="3 3"/></svg><div><b>Батут и акробатическая дорожка</b><span class="muted small">Для прыжков и первых сальто</span></div></div>
+    <div class="card app"><svg width="44" height="44" viewBox="0 0 44 44" aria-hidden="true"><circle cx="22" cy="22" r="16" fill="none" stroke="var(--lav-ink)" stroke-width="2.5"/><path d="M22 12 V22 L29 26" stroke="var(--peach-ink)" stroke-width="2.5" fill="none" stroke-linecap="round"/></svg><div><b>8.5. Часы работы</b><span class="muted small">Пн–Пт 15:30–20:00<br>Сб 9:30–12:30 · Вс выходной</span></div></div>
+  </div>
+</section>
+
+<!-- 9 -->
+<section id="s9">
+  <div class="sh"><span class="n">9</span><h2>Дизайн</h2></div>
+  <p>Светлые пастельные тона: лавандовый и персиковый на молочном фоне. Мягкие скруглённые формы, кнопки-«таблетки», дружелюбная, но не мультяшная подача. Главный образ — поза «ласточка» и траектория прыжка.</p>
+
+  <h3 style="margin-top:24px">9.2. Палитра <span class="muted small" style="font-family:var(--f-body)">светлая / тёмная тема</span></h3>
+  <div class="sw" id="sw"></div>
+  <div class="btns" style="margin-top:16px"><span class="btn pri">Записаться на пробное</span><span class="btn sec">Мы в Instagram</span><span class="muted small" style="align-self:center">Главная кнопка — персиковая, вторая — лавандовая</span></div>
+
+  <h3 style="margin-top:28px">9.3. Шрифты <span class="muted small" style="font-family:var(--f-body)">Google Fonts с кириллицей</span></h3>
+  <div class="fonts">
+    <div class="font"><div class="spec" style="font-family:var(--f-display);font-weight:700">Птенцы · 12 × 12</div><div class="info"><b>Unbounded 500–700</b>Заголовки: H1, H2, названия групп, цифры фактов</div></div>
+    <div class="font"><div class="spec" style="font-family:var(--f-body);font-weight:700">Запись в два нажатия</div><div class="info"><b>Nunito 400–800</b>Основной текст, кнопки, подписи</div></div>
+    <div class="font"><div class="spec" style="font-family:var(--f-hand);font-weight:700;font-size:36px;color:var(--peach-ink)">вот она — «ласточка»!</div><div class="info"><b>Caveat 600–700</b>Подпись на иллюстрации, цитата, «выходной», памятка</div></div>
+  </div>
+
+  <h3 style="margin-top:28px">9.4. Иконки и графика</h3>
+  <p class="muted small">Собственные линейные иконки. Логотипы Instagram и WhatsApp не используются. Схема проезда нарисована в SVG, это не встроенная карта.</p>
+  <div class="icons">
+    <div class="ico"><span><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="7" width="18" height="13" rx="3"/><path d="M8 7l1.5-3h5L16 7"/><circle cx="12" cy="13.5" r="3.5"/></svg></span>камера</div>
+    <div class="ico"><span><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 5h16v11H9l-5 4z"/></svg></span>сообщение</div>
+    <div class="ico"><span><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21s-7-6.5-7-12a7 7 0 0114 0c0 5.5-7 12-7 12z"/><circle cx="12" cy="9" r="2.5"/></svg></span>метка</div>
+    <div class="ico"><span><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="8" y="8" width="12" height="12" rx="2"/><path d="M16 8V5a1 1 0 00-1-1H5a1 1 0 00-1 1v10a1 1 0 001 1h3"/></svg></span>копировать</div>
+    <div class="ico"><span><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l8 3v6c0 5-3.5 8-8 9-4.5-1-8-4-8-9V6z"/></svg></span>щит</div>
+    <div class="ico"><span><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="8" r="3"/><path d="M3 20c0-3.5 2.7-6 6-6s6 2.5 6 6"/><circle cx="17" cy="9" r="2.5"/><path d="M16 14c3 0 5 2 5 5"/></svg></span>люди</div>
+    <div class="ico"><span><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M8 3l4 7 4-7"/><circle cx="12" cy="15" r="5"/></svg></span>медаль</div>
+    <div class="ico"><span style="background:var(--lav-mid)"><svg width="28" height="28" viewBox="0 0 34 34"><path d="M7 23 C 11 9, 22 8, 27 18" fill="none" stroke="var(--lav-ink)" stroke-width="2.4" stroke-dasharray="3 3" stroke-linecap="round"/><circle cx="27" cy="18" r="3.6" fill="var(--peach-ink)"/></svg></span>логотип</div>
+  </div>
+</section>
+
+<!-- 10 -->
+<section id="s10">
+  <div class="sh"><span class="n">10</span><h2>Нефункциональные требования</h2></div>
+  <h3>Точки перестройки</h3>
+  <div class="panel bp-wrap"><div class="bp"><svg viewBox="0 0 760 170" role="img" aria-label="Шкала ширины экрана от 360 до 1200 пикселей с точками перестройки">
+    <g id="bpg"></g>
+  </svg></div></div>
+  <div class="tbl" style="margin-top:16px">
+    <table>
+      <thead><tr><th>Требование</th><th>Критерий</th></tr></thead>
+      <tbody>
+        <tr><td>Адаптивность</td><td>От 360 px до широких экранов. На 390 px нет горизонтальной прокрутки (проверено). Боковые поля не меньше 16 px.</td></tr>
+        <tr><td>Тёмная тема</td><td>Включается по настройке системы. Поддержан принудительный выбор через <code>data-theme</code>.</td></tr>
+        <tr><td>Доступность</td><td>Видимый фокус с клавиатуры. <code>aria-label</code> у кнопок-иконок, <code>aria-pressed</code> у переключателей, <code>aria-live</code> у результата подбора. Контраст не ниже WCAG AA. Анимации отключаются при <code>prefers-reduced-motion</code>.</td></tr>
+        <tr><td>Производительность</td><td>Один файл без внешних библиотек. Внешние запросы только к Google Fonts (<code>display=swap</code>).</td></tr>
+        <tr><td>Совместимость</td><td>Последние Chrome, Safari (iOS и macOS), Firefox, Edge.</td></tr>
+        <tr><td>Ограничения публикации</td><td>Без iframe (карты, видео), без отправки форм на сервер, без <code>alert</code> и <code>confirm</code>.</td></tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<!-- 11 -->
+<section id="s11">
+  <div class="sh"><span class="n">11</span><h2>Критерии приёмки</h2></div>
+  <div class="progress"><span id="pc">0 из 12</span><div class="bar"><i id="pb"></i></div><span class="muted small">отметки сохраняются в этом браузере</span></div>
+  <ul class="checks" id="checks"></ul>
+</section>
+
+<!-- 12 -->
+<section id="s12">
+  <div class="sh"><span class="n">12</span><h2>Данные для замены перед запуском</h2></div>
+  <div class="tbl">
+    <table>
+      <thead><tr><th>Что</th><th>Сейчас (заглушка)</th><th>Где менять</th></tr></thead>
+      <tbody>
+        <tr><td>Название клуба</td><td>«Ласточка»</td><td>заголовок страницы, шапка, подвал, тексты</td></tr>
+        <tr><td>Ник Instagram</td><td><code>lastochka_gym</code></td><td><code>CLUB.instagram</code></td></tr>
+        <tr><td>Номер WhatsApp</td><td><code>70000000000</code>, на сайте «+7 (000) 000-00-00» <span class="chip rose" style="font-size:11px;padding:1px 8px">не работает</span></td><td><code>CLUB.whatsapp</code>, <code>CLUB.phoneLabel</code></td></tr>
+        <tr><td>Адрес</td><td>ул. Садовая, 12, спорткомплекс «Олимп», 2 этаж</td><td><code>CLUB.address</code></td></tr>
+        <tr><td>Расписание</td><td>см. 8.2</td><td>массив <code>WEEK</code> в скрипте и строки «Дни» в карточках</td></tr>
+        <tr><td>Тренеры</td><td>вымышленные имена и регалии</td><td>раздел «Тренеры»</td></tr>
+        <tr><td>Часы работы</td><td>см. 8.5</td><td>карточка «Адрес»</td></tr>
+        <tr><td>Факты на первом экране</td><td>10 детей, 3 группы, ковёр 12 × 12 м</td><td>первый экран</td></tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<!-- 13 -->
+<section id="s13">
+  <div class="sh"><span class="n">13</span><h2>Открытые вопросы</h2></div>
+  <ol class="qa">
+    <li>Настоящие название, ник Instagram, номер WhatsApp и адрес клуба.</li>
+    <li>Нужен ли раздел с ценами и абонементами (в v1 не выбран)?</li>
+    <li>Есть ли фотографии тренеров и зала вместо аватаров с инициалами?</li>
+    <li>Какую аналитику подключить для метрик: Яндекс Метрика или Google Analytics?</li>
+    <li>Где будет жить сайт: домен и хостинг?</li>
+    <li>Нужна ли вторая языковая версия?</li>
+  </ol>
+</section>
+
+<!-- 14 -->
+<section id="s14">
+  <div class="sh"><span class="n">14</span><h2>Идеи для v2</h2></div>
+  <div class="ideas">
+    <span>Цены и абонементы, акция «приведи друга»</span>
+    <span>Отзывы родителей</span>
+    <span>Фотогалерея тренировок и турниров</span>
+    <span>Форма заявки → мессенджер или CRM</span>
+    <span>Календарь турниров и результаты</span>
+    <span>Вопросы и ответы: форма, опоздания, пропуски, отработки</span>
+  </div>
+</section>
+
+<footer>
+  <span>PRD: сайт секции спортивной гимнастики «Ласточка» · версия 1.0 · 28.09.2026</span>
+  <a href="#top">Наверх ↑</a>
+</footer>
+
+</main>
+</div>
+
+<script>
+(function(){
+  /* ---------- Age picker (FR-03) ---------- */
+  const GROUPS=[{name:'Птенцы',from:4,to:6},{name:'Ласточки',from:7,to:9},{name:'Стрижи',from:10,to:12}];
+  const plural=n=>{const a=n%10,b=n%100;if(a===1&&b!==11)return'год';if(a>=2&&a<=4&&(b<12||b>14))return'года';return'лет'};
+  const ages=document.getElementById('ages'),result=document.getElementById('result'),msg=document.getElementById('msg');
+  const cards=[...document.querySelectorAll('#gcards .gcard')];
+  function pick(n){
+    const g=GROUPS.find(x=>n>=x.from&&n<=x.to);
+    [...ages.children].forEach(b=>b.setAttribute('aria-pressed',String(+b.dataset.age===n)));
+    result.innerHTML='<b>'+n+' '+plural(n)+'</b> — это группа «'+g.name+'»';
+    msg.innerHTML='<small>Кнопка «Записаться в «'+g.name+'»» → WhatsApp</small>Здравствуйте! Хочу записать ребёнка ('+n+' '+plural(n)+') в группу «'+g.name+'» на пробное занятие.';
+    cards.forEach(c=>{const m=c.dataset.g===g.name;c.classList.toggle('match',m);
+      let b=c.querySelector('.badge');if(m&&!b){b=document.createElement('span');b.className='badge';b.textContent='Подходит по возрасту';c.appendChild(b)}else if(!m&&b)b.remove()});
+  }
+  for(let n=4;n<=12;n++){const b=document.createElement('button');b.type='button';b.textContent=n;b.dataset.age=n;b.setAttribute('aria-label',n+' '+plural(n));b.onclick=()=>pick(n);ages.appendChild(b)}
+  pick(7);
+
+  /* ---------- Schedule (FR-05) ---------- */
+  const WEEK=[
+    ['Пн',[['l','17:00–18:00','Ласточки','7–9'],['r','18:15–19:45','Стрижи','10–12']]],
+    ['Вт',[['p','16:00–16:45','Птенцы','4–6'],['r','17:00–18:30','Стрижи','10–12']]],
+    ['Ср',[['l','17:00–18:00','Ласточки','7–9'],['r','18:15–19:45','Стрижи','10–12']]],
+    ['Чт',[['p','16:00–16:45','Птенцы','4–6'],['r','17:00–18:30','Стрижи','10–12']]],
+    ['Пт',[['l','17:00–18:00','Ласточки','7–9']]],
+    ['Сб',[['p','10:00–10:45','Птенцы','4–6'],['t','11:00–11:45','Пробное для новичков','4–12']]],
+    ['Вс',[]]
+  ];
+  const week=document.getElementById('week');
+  const today=(new Date().getDay()+6)%7;
+  week.innerHTML=WEEK.map(([d,ls],i)=>'<div class="day'+(i===today?' today':'')+'"><div class="dn">'+d+(i===today?'<em>сегодня</em>':'')+'</div><div class="lessons">'+
+    (ls.length?ls.map(l=>'<div class="lesson '+l[0]+'" data-g="'+l[0]+'"><b>'+l[1]+'</b>'+l[2]+' · '+l[3]+'</div>').join(''):'<span class="off">выходной</span>')+'</div></div>').join('');
+  const fbtns=[...document.querySelectorAll('#filters button')];
+  function filt(f){fbtns.forEach(b=>b.setAttribute('aria-pressed',String(b.dataset.f===f)));
+    week.querySelectorAll('.lesson').forEach(l=>l.classList.toggle('dim',f!=='all'&&l.dataset.g!=='t'&&l.dataset.g!==f))}
+  fbtns.forEach(b=>b.onclick=()=>filt(b.dataset.f));
+
+  /* ---------- Structure hover link ---------- */
+  const blks=[...document.querySelectorAll('#phone [data-k]')],items=[...document.querySelectorAll('#slist li')];
+  const hl=k=>{blks.forEach(b=>b.classList.toggle('hl',b.dataset.k===k));items.forEach(i=>i.classList.toggle('hl',i.dataset.k===k))};
+  items.forEach(i=>{i.onmouseenter=()=>hl(i.dataset.k);i.onmouseleave=()=>hl(null)});
+
+  /* ---------- Palette ---------- */
+  const PAL=[
+    ['--bg','фон страницы','#FCFAFE','#1A1624'],['--bg-alt','чередующиеся разделы','#F5F0FC','#211B2E'],
+    ['--surface','карточки','#FFFFFF','#282137'],['--ink','основной текст','#2B2340','#F3EEFB'],
+    ['--ink-soft','второстепенный текст','#615878','#BCB1D1'],
+    ['--lav','лавандовый фон','#ECE4FB','#2F2748'],['--lav-mid','лавандовая заливка','#D8C9F6','#4B3D75'],['--lav-ink','лавандовый акцент','#5A43A0','#CDBBFA'],
+    ['--peach','персиковый фон','#FFE6D8','#3A2A2A'],['--peach-mid','главная кнопка','#FFC9AD','#F2B596'],['--peach-ink','персиковый акцент','#A04F2A','#FFC2A3'],
+    ['--rose','розовый фон','#FBE0EC','#3A2436'],['--rose-mid','розовая заливка','#F3C2D8','#6A3F5E'],['--rose-ink','«Стрижи»','#94386A','#F5B5D3']
+  ];
+  const lum=h=>{const c=[1,3,5].map(i=>parseInt(h.substr(i,2),16)/255);return .2126*c[0]+.7152*c[1]+.0722*c[2]};
+  document.getElementById('sw').innerHTML=PAL.map(([t,r,l,d])=>'<div class="swatch"><div class="pair"><div style="background:'+l+';color:'+(lum(l)>.5?'#2B2340':'#fff')+'">'+l+'</div><div style="background:'+d+';color:'+(lum(d)>.5?'#1A1624':'#F3EEFB')+'">'+d+'</div></div><div class="lab"><code>'+t+'</code><div class="muted small">'+r+'</div></div></div>').join('');
+
+  /* ---------- Breakpoints ruler ---------- */
+  const X0=30,X1=730,MIN=320,MAX=1200,sx=v=>X0+(v-MIN)/(MAX-MIN)*(X1-X0);
+  const BP=[[420,'кнопки возраста 44 px'],[520,'«Записаться» в шапке скрыта'],[540,'день над занятиями'],[600,'плавающие кнопки 48 px'],[900,'бургер-меню, сетки в 1 колонку'],[1040,'расписание в 7 колонок']];
+  let s='<rect x="'+sx(360)+'" y="112" width="'+(X1-sx(360))+'" height="10" rx="5" fill="var(--lav)"/>';
+  s+='<rect x="'+sx(360)+'" y="112" width="'+(sx(390)-sx(360))+'" height="10" rx="3" fill="var(--peach-mid)"/>';
+  [400,600,800,1000,1200].forEach(v=>{s+='<text x="'+sx(v)+'" y="150" text-anchor="middle" font-size="12" fill="var(--ink-soft)" font-family="Nunito,sans-serif">'+v+'</text>'});
+  s+='<text x="'+sx(360)+'" y="166" font-size="11" fill="var(--peach-ink)" font-family="Nunito,sans-serif" font-weight="700">360 min · 390 проверено</text>';
+  BP.forEach(([v,l],i)=>{const x=sx(v),y=14+(i%3)*30;
+    s+='<line x1="'+x+'" y1="'+(y+8)+'" x2="'+x+'" y2="122" stroke="var(--lav-ink)" stroke-width="1.5" stroke-dasharray="3 3"/>';
+    s+='<circle cx="'+x+'" cy="117" r="5" fill="var(--lav-ink)"/>';
+    const anchor=v>=900?'end':'start',dx=v>=900?-6:6;
+    s+='<text x="'+(x+dx)+'" y="'+(y+4)+'" text-anchor="'+anchor+'" font-size="12.5" fill="var(--ink)" font-family="Nunito,sans-serif"><tspan font-weight="800">'+v+' px</tspan> <tspan fill="var(--ink-soft)">'+l+'</tspan></text>'});
+  document.getElementById('bpg').innerHTML=s;
+
+  /* ---------- Acceptance checklist ---------- */
+  const CHECKS=[
+    'Все пункты меню ведут к своим разделам, заголовок раздела не прячется под шапкой.',
+    'Каждая кнопка Instagram открывает профиль из CLUB.instagram в новой вкладке.',
+    'Каждая кнопка WhatsApp открывает чат с номером из CLUB.whatsapp и нужным текстом (раздел 7).',
+    'Выбор каждого возраста от 4 до 12 показывает верную группу и верное склонение слова «лет».',
+    'Кнопка «Расписание →» в карточке включает фильтр группы и прокручивает к расписанию.',
+    'Фильтр расписания приглушает чужие занятия, пробное занятие остаётся ярким.',
+    'Отметка «сегодня» стоит на текущем дне недели.',
+    'Кнопки карт открывают поиск по адресу из CLUB.address.',
+    'Копирование ника, номера и адреса показывает уведомление. Если копирование не сработало, текст выделяется.',
+    'На 390 px нет горизонтальной прокрутки, меню открывается и закрывается.',
+    'В тёмной теме весь текст читается, карточки отделены от фона.',
+    'При отключённой анимации точка на иллюстрации не двигается.'
+  ];
+  const KEY='prd-lastochka-checks';let saved=[];
+  try{saved=JSON.parse(localStorage.getItem(KEY)||'[]')}catch(e){}
+  const ul=document.getElementById('checks');
+  ul.innerHTML=CHECKS.map((c,i)=>'<li><label><input type="checkbox" id="chk'+i+'"'+(saved.includes(i)?' checked':'')+'><span>'+c.replace(/(CLUB\.\w+)/g,'<code>$1</code>')+'</span></label></li>').join('');
+  const boxes=[...ul.querySelectorAll('input')];
+  function upd(){const on=boxes.map((b,i)=>b.checked?i:-1).filter(i=>i>=0);
+    document.getElementById('pc').textContent=on.length+' из '+boxes.length;
+    document.getElementById('pb').style.width=(on.length/boxes.length*100)+'%';
+    try{localStorage.setItem(KEY,JSON.stringify(on))}catch(e){}}
+  boxes.forEach(b=>b.onchange=upd);upd();
+})();
+</script>
+</body>
+</html>
